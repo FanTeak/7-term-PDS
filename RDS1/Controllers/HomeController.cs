@@ -26,17 +26,15 @@
 
         public async Task<IActionResult> Action(InputModel model)
         {
-            var a = 1;
-            return View();
+            await LinearFunction.Calculate(model);
+            return View(model);
         }
 
 
         [HttpPost]
         public IActionResult OpenFile()
         {
-            IOCommand command = new IOCommand();
-
-            if (command.OpenFile())
+            if (IOCommand.OpenFile())
             {
                 return Ok();
             }

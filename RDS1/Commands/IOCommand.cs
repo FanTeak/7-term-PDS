@@ -3,10 +3,10 @@
     using System.Diagnostics;
     using System.Text;
 
-    public class IOCommand
+    public static class IOCommand
     {
         private const string FilePath = "C:\\Users\\dutch\\source\\repos\\7-term\\PDS\\PDS1\\Result.txt";
-        public async Task WriteFile()
+        public static async Task WriteFile()
         {
             StringBuilder textFile = new StringBuilder();
             string newLine = "================================================================\n";
@@ -23,7 +23,7 @@
             }
         }
 
-        public bool OpenFile()
+        public static bool OpenFile()
         {
             try
             {
