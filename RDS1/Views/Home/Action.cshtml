@@ -1,0 +1,80 @@
+﻿@using System.Globalization
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Fourier";
+}
+
+<div>
+    <div class="mt-5 active-elements">
+        <div class="text-font border-fourier">
+            
+        </div>
+        <div class="border-fourier">
+            <form action="Action" method="GET">
+                <table class="input-table">
+                    <tr>
+                        <td>
+                            <label for="modulus" class="text-font">Modulus(m):</label>
+                        </td>
+                        <td>
+                            <input name="modulus" type="number" id="modulus" min="-10" max="10" value="1" step="0.1" class="custom-input">
+                        </td>
+                        <td>
+                            <label for="modulusStep" class="text-font ms-3">^</label>
+                        </td>
+                        <td>
+                            <input name="modulusStep" type="number" id="modulusStep" min="-10" max="10" value="1" step="0.1" class="custom-input">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="multiplier" class="text-font">Multiplier(a):</label>
+                        </td>
+                        <td>
+                            <input name="multiplier" type="number" id="multiplier" min="-10" max="10" value="1" step="0.1" class="custom-input">
+                        </td>
+                        <td>
+                            <label for="multiplierStep" class="text-font ms-3">^</label>
+                        </td>
+                        <td>
+                            <input name="multiplierStep" type="number" id="multiplierStep" min="1" max="100" value="3" step="0.1" class="custom-input">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="increment" class="text-font">Increment(c):</label>
+                        </td>
+                        <td>
+                            <input name="increment" type="number" id="countIterations" min="1" max="100" value="13" class="custom-input">
+                        </td>
+                        <td>
+                            <label for="incrementStep" class="text-font ms-3">^</label>
+                        </td>
+                        <td>
+                            <input name="incrementStep" type="number" id="incrementStep" min="1" max="500" value="1" class="custom-input">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="count" class="text-font">X:</label>
+                        </td>
+                        <td>
+                            <input name="firstValue" type="number" id="firstValue" min="1" max="500" value="1" class="custom-input">
+                        </td>
+                    </tr>
+                </table>
+                <div class="text-center mt-2">
+                    <button type="submit" class="btn btn-outline-dark">Submit</button>
+                </div>
+            </form>
+        </div>
+        <div class="text-font border-fourier text-center">
+            <button type="button" class="cybr-btn mx-2" onclick="OpenFile()">
+                FILE
+                <span aria-hidden>_</span>
+                <span aria-hidden class="cybr-btn__glitch">CUM_</span>
+                <span aria-hidden class="cybr-btn__tag">R25</span>
+            </button>
+        </div>
+    </div>
+</div>
