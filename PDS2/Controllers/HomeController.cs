@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using PDS2.Commands;
+using PDS2.Models;
 
 namespace PDS2.Controllers
 {
@@ -25,7 +26,7 @@ namespace PDS2.Controllers
 
         public async Task<IActionResult> Action(InputModel model)
         {
-            await LinearFunction.Calculate(model);
+            await FunctionCommand.Calculate(model);
             return View(model);
         }
 

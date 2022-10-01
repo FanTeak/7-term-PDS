@@ -1,6 +1,4 @@
-﻿
-
-function OpenFile(length) {
+﻿function OpenFile(length) {
     $.ajax({
         type: 'POST',
         url: 'OpenFile',

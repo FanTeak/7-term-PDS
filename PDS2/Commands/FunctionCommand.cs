@@ -1,7 +1,6 @@
-﻿using PDS2.Commands;
-using PDS2.Models;
+﻿using PDS2.Models;
 
-namespace RDS2.Commands;
+namespace PDS2.Commands;
 
 public static class FunctionCommand
 {
