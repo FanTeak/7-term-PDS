@@ -6,9 +6,6 @@
 
 <div>
     <div class="mt-5 active-elements">
-        <div class="text-font border-fourier">
-            
-        </div>
         <div class="border-fourier">
             <form action="Action" method="GET">
                 <table class="input-table">
@@ -17,13 +14,13 @@
                             <label for="modulus" class="text-font">Modulus(m):</label>
                         </td>
                         <td>
-                            <input name="modulus" type="number" id="modulus" min="-10" max="10" value="@Model.Modulus" step="1" class="custom-input">
+                            <input name="modulus" type="number" id="modulus" min="-100" max="100" value="@Model.Modulus" step="1" class="custom-input">
                         </td>
                         <td>
                             <label for="modulusStep" class="text-font ms-3">^</label>
                         </td>
                         <td>
-                            <input name="modulusStep" type="number" id="modulusStep" min="-100" max="100" value="@Model.ModulusStep" step="1" class="custom-input">-1
+                            <input name="modulusStep" type="number" id="modulusStep" min="-1000" max="1000" value="@Model.ModulusStep" step="1" class="custom-input">-1
                         </td>
                     </tr>
                     <tr>
@@ -31,13 +28,13 @@
                             <label for="multiplier" class="text-font">Multiplier(a):</label>
                         </td>
                         <td>
-                            <input name="multiplier" type="number" id="multiplier" min="-10" max="10" value="@Model.Multiplier" step="1" class="custom-input">
+                            <input name="multiplier" type="number" id="multiplier" min="-100" max="100" value="@Model.Multiplier" step="1" class="custom-input">
                         </td>
                         <td>
                             <label for="multiplierStep" class="text-font ms-3">^</label>
                         </td>
                         <td>
-                            <input name="multiplierStep" type="number" id="multiplierStep" min="-10" max="10" value="@Model.MultiplierStep" step="1" class="custom-input">
+                            <input name="multiplierStep" type="number" id="multiplierStep" min="-100" max="100" value="@Model.MultiplierStep" step="1" class="custom-input">
                         </td>
                     </tr>
                     <tr>
@@ -45,7 +42,7 @@
                             <label for="increment" class="text-font">Increment(c):</label>
                         </td>
                         <td>
-                            <input name="increment" type="number" id="increment" min="-100" max="100" value="@Model.Increment" class="custom-input">
+                            <input name="increment" type="number" id="increment" min="-100000" max="100000" value="@Model.Increment" class="custom-input">
                         </td>
                     </tr>
                     <tr>

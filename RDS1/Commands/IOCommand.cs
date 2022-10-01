@@ -5,17 +5,25 @@
 
     public static class IOCommand
     {
-        private const string FilePath = "C:\\Users\\dutch\\source\\repos\\7-term\\PDS\\PDS1\\Result.txt";
-        public static async Task WriteFile()
+        private const string FilePath = "C:\\Users\\dutch\\source\\repos\\7term\\PDS\\RDS1\\Result.txt";
+        public static async Task WriteFile(List<uint> values, uint? count = null)
         {
             StringBuilder textFile = new StringBuilder();
-            string newLine = "================================================================\n";
 
-            textFile.Append(newLine);
+            textFile.Append(string.Join(", ", values));
+            textFile.Append("\n");
+
+            if (count.HasValue)
+            {
+                string newLine = "================================================================\n";
+                textFile.Append(newLine);
+                textFile.Append("Count: " + count + "\n");
+                textFile.Append(newLine);
+            }
 
             try
             {
-                await File.WriteAllTextAsync(FilePath, textFile.ToString());
+                await File.AppendAllTextAsync(FilePath, textFile.ToString());
             }
             catch (Exception e)
             {

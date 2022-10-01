@@ -1,10 +1,11 @@
-﻿namespace PDS1.Controllers
-{
-    using Microsoft.AspNetCore.Mvc;
-    using System.Diagnostics;
-    using Commands;
-    using RDS1.Models;
+﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
+using PDS1.Commands;
+using RDS1.Commands;
+using RDS1.Models;
 
+namespace RDS1.Controllers
+{
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
