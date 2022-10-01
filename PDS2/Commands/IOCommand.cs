@@ -1,11 +1,11 @@
-﻿namespace PDS1.Commands
+﻿namespace PDS2.Commands
 {
     using System.Diagnostics;
     using System.Text;
 
     public static class IOCommand
     {
-        private const string FilePath = "C:\\Users\\dutch\\source\\repos\\7term\\PDS\\RDS1\\Result.txt";
+        private const string FilePath = "C:\\Users\\dutch\\source\\repos\\7term\\PDS\\PDS2\\Result.txt";
         public static async Task WriteFile(List<uint> values, uint? count = null)
         {
             StringBuilder textFile = new StringBuilder();

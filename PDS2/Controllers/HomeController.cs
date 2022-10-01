@@ -1,10 +1,8 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using PDS1.Commands;
-using RDS1.Commands;
-using RDS1.Models;
+using PDS2.Commands;
 
-namespace RDS1.Controllers
+namespace PDS2.Controllers
 {
     public class HomeController : Controller
     {
