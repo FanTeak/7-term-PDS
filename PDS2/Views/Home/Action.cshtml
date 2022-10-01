@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
-@model InputModel
+@model FunctionModel
 @{
     ViewData["Title"] = "Fourier";
 }
@@ -14,13 +14,7 @@
                             <label for="modulus" class="text-font">Modulus(m):</label>
                         </td>
                         <td>
-                            <input name="modulus" type="number" id="modulus" min="-100" max="100" value="@Model.Modulus" step="1" class="custom-input">
-                        </td>
-                        <td>
-                            <label for="modulusStep" class="text-font ms-3">^</label>
-                        </td>
-                        <td>
-                            <input name="modulusStep" type="number" id="modulusStep" min="-1000" max="1000" value="@Model.ModulusStep" step="1" class="custom-input">-1
+                            <input name="modulus" type="number" id="modulus" min="-100" max="100" value="" step="1" class="custom-input">
                         </td>
                     </tr>
                     <tr>
@@ -30,12 +24,7 @@
                         <td>
                             <input name="multiplier" type="number" id="multiplier" min="-100" max="100" value="@Model.Multiplier" step="1" class="custom-input">
                         </td>
-                        <td>
-                            <label for="multiplierStep" class="text-font ms-3">^</label>
-                        </td>
-                        <td>
-                            <input name="multiplierStep" type="number" id="multiplierStep" min="-100" max="100" value="@Model.MultiplierStep" step="1" class="custom-input">
-                        </td>
+                        
                     </tr>
                     <tr>
                         <td>

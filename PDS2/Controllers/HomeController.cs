@@ -24,10 +24,10 @@ namespace PDS2.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Action(InputModel model)
+        public async Task<IActionResult> Action(string toHash)
         {
-            await FunctionCommand.Calculate(model);
-            return View(model);
+            var result = await FunctionCommand.Calculate(toHash);
+            return View(result);
         }
 
 
