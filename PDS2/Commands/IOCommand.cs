@@ -6,29 +6,31 @@
     public static class IOCommand
     {
         private const string FilePath = "C:\\Users\\dutch\\source\\repos\\7term\\PDS\\PDS2\\Result.txt";
-        public static async Task WriteFile(List<uint> values, uint? count = null)
+        public static async Task WriteFile(string hash)
         {
-            StringBuilder textFile = new StringBuilder();
-
-            textFile.Append(string.Join(", ", values));
-            textFile.Append("\n");
-
-            if (count.HasValue)
-            {
-                string newLine = "================================================================\n";
-                textFile.Append(newLine);
-                textFile.Append("Count: " + count + "\n");
-                textFile.Append(newLine);
-            }
-
             try
             {
-                await File.AppendAllTextAsync(FilePath, textFile.ToString());
+                await File.WriteAllTextAsync(FilePath, hash);
             }
             catch (Exception e)
             {
                 Console.WriteLine("Exception has occurred while writing to file: " + e.Message);
             }
+        }
+
+        public static async Task<string?> ReadFile(string filePath)
+        {
+            try
+            {
+                var data = await File.ReadAllTextAsync(filePath);
+                return data;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception has occurred while reading hash from file: " + e.Message);
+            }
+
+            return null;
         }
 
         public static bool OpenFile()

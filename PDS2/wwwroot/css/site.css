@@ -57,13 +57,13 @@ body {
     margin-left: 1rem;
     border-radius: 20%;
     border-width: 0;
-    width: 4rem;
-    text-align: right;
+    width: 35rem;
+    text-align: left;
 }
 
 .border-fourier {
     padding: 0.5rem;
-    width: 25rem;
+    width: 50rem;
     border: thick outset #32a1ce;
     margin-bottom: 1rem;
 }

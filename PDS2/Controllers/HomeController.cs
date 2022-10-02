@@ -24,12 +24,40 @@ namespace PDS2.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Action(string toHash)
+        public async Task<IActionResult> Action(string toHash = "")
         {
-            var result = await FunctionCommand.Calculate(toHash);
-            return View(result);
+            var result = MD5Core.GetHashString(toHash);
+
+            await IOCommand.WriteFile(result);
+
+            var resultModel = new FunctionModel()
+            {
+                StartValue = toHash,
+                HashedModel = result
+            };
+            return View(resultModel);
         }
 
+        public async Task<IActionResult> Compare(string filePath, string stringToCompare)
+        {
+            var result = await IOCommand.ReadFile(filePath);
+
+            if (string.IsNullOrWhiteSpace(result))
+            {
+                return BadRequest("Incorrect filepath or file data");
+            }
+
+            result = MD5Core.GetHashString(result);
+
+            var compareModel = new CompareModel()
+            {
+                FirstHash = result,
+                SecondHash = stringToCompare,
+                Equals = result.Equals(stringToCompare)
+            };
+
+            return Ok(compareModel);
+        }
 
         [HttpPost]
         public IActionResult OpenFile()
@@ -40,6 +68,21 @@ namespace PDS2.Controllers
             }
 
             return StatusCode(503, "Can't open file.");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ReadFile(string filePath)
+        {
+            var result = await IOCommand.ReadFile(filePath);
+            
+            if (string.IsNullOrWhiteSpace(result))
+            {
+                return BadRequest("Incorrect filepath or file data");
+            }
+
+            result = MD5Core.GetHashString(result);
+
+            return Ok(result);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

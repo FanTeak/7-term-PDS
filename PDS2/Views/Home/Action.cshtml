@@ -11,50 +11,66 @@
                 <table class="input-table">
                     <tr>
                         <td>
-                            <label for="modulus" class="text-font">Modulus(m):</label>
+                            <label for="toHash" class="text-font">String to hash:</label>
                         </td>
                         <td>
-                            <input name="modulus" type="number" id="modulus" min="-100" max="100" value="" step="1" class="custom-input">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="multiplier" class="text-font">Multiplier(a):</label>
-                        </td>
-                        <td>
-                            <input name="multiplier" type="number" id="multiplier" min="-100" max="100" value="@Model.Multiplier" step="1" class="custom-input">
-                        </td>
-                        
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="increment" class="text-font">Increment(c):</label>
-                        </td>
-                        <td>
-                            <input name="increment" type="number" id="increment" min="-100000" max="100000" value="@Model.Increment" class="custom-input">
+                            <input name="toHash" type="text" id="toHash" value="@Model.StartValue" class="custom-input">
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <label for="firstValue" class="text-font">X:</label>
+                            <label for="resultHash" class="text-font">Hashed string:</label>
                         </td>
                         <td>
-                            <input name="firstValue" type="number" id="firstValue" min="1" max="4096" value="@Model.FirstValue" class="custom-input">
+                            <input name="resultHash" type="text" id="resultHash" value="@Model.HashedModel" class="custom-input" disabled>
                         </td>
                     </tr>
                 </table>
                 <div class="text-center mt-2">
-                    <button type="submit" class="sea" style="--content: 'SUBMIT';">
+                    <button type="submit" class="sea" style="--content: 'HASH';">
                         <div class="left"></div>
-                        SUBMIT
+                        HASH
                         <div class="right"></div>
                     </button>
                 </div>
             </form>
         </div>
+        <div class="border-fourier">
+            <table class="input-table">
+                <tr>
+                    <td>
+                        <label for="filePath" class="text-font">Path to file:</label>
+                    </td>
+                    <td>
+                        <input name="filePath" type="text" id="filePath" value="C:\\Users\\dutch\\source\\repos\\7term\\PDS\\PDS2\\Result.txt" class="custom-input">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="hashFile" class="text-font">Hash in file:</label>
+                    </td>
+                    <td>
+                        <input name="hashFile" type="text" id="hashFile" value="" class="custom-input" disabled>
+                    </td>
+                </tr>
+            </table>
+            <div class="text-center mt-2">
+                <button type="button" class="sea" style="--content: 'READ';" onclick="ReadFile()">
+                    <div class="left"></div>
+                    READ
+                    <div class="right"></div>
+                </button>
+            </div>
+        </div>
         <div class="text-font border-fourier text-center">
             <button type="button" class="cybr-btn mx-2" onclick="OpenFile()">
                 FILE
+                <span aria-hidden>_</span>
+                <span aria-hidden class="cybr-btn__glitch">CUM_</span>
+                <span aria-hidden class="cybr-btn__tag">R25</span>
+            </button>
+            <button type="button" class="cybr-btn mx-2" onclick="Compare()">
+                COMPARE
                 <span aria-hidden>_</span>
                 <span aria-hidden class="cybr-btn__glitch">CUM_</span>
                 <span aria-hidden class="cybr-btn__tag">R25</span>
