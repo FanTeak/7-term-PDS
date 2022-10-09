@@ -6,13 +6,13 @@ using PDS3.Commands.IOFile;
 using PDS3.Commands.MD5;
 using PDS3.Commands.RC5;
 using static PDS3.Commands.RC5.RC5;
-using System.Reflection;
 
 namespace PDS3.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private static string FileExtension = "";
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -45,6 +45,8 @@ namespace PDS3.Controllers
                     _logger.Log(LogLevel.Error, errorMsg);
                     throw new FileNotFoundException(errorMsg);
                 }
+
+                FileExtension = Path.GetExtension(model.FilePath);
 
                 var encoded = Encoding.UTF8.GetBytes(model.Password);
                 var hashedKey = MD5.GetMD5HashedKeyForRC5(encoded, KeyLengthInBytesEnum.Bytes_8);
@@ -122,7 +124,7 @@ namespace PDS3.Controllers
             var fi = new FileInfo(filePath);
             var fn = Path.GetFileNameWithoutExtension(filePath);
 
-            return Path.Combine(fi.DirectoryName, fn + padding + fi.Extension);
+            return Path.Combine(fi.DirectoryName, fn + padding + FileExtension);
         }
     }
 }
