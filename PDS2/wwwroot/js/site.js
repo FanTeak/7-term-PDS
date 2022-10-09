@@ -13,7 +13,7 @@
 
 function Compare() {
     const filePath = $('#filePath').val();
-    const stringToCompare = $('#resultHash').val();
+    const stringToCompare = $('#stringToCompare').val();
 
     $.ajax({
         type: 'POST',
