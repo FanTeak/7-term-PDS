@@ -19,10 +19,10 @@ namespace PDS3.Commands.RC5
 
         public byte[] Encrypt(byte[] input, byte[] key)
         {
-            var paddedBytes = ConcatArrays(input, GetPadding(input));
+            var paddedBytes = ConcatArrays(input, Padding(input));
             var bytesPerBlock = _wordsFactory.BytesPerBlock;
             var s = BuildExpandedKeyTable(key);
-            var cnPrev = GetRandomBytesForInitVector().Take(bytesPerBlock).ToArray();
+            var cnPrev = GetInitializeVector().Take(bytesPerBlock).ToArray();
             var encodedFileContent = new byte[cnPrev.Length + paddedBytes.Length];
 
             EncipherECB(cnPrev, encodedFileContent, inStart: 0, outStart: 0, s);
@@ -120,7 +120,7 @@ namespace PDS3.Commands.RC5
             b.FillBytesArray(outBuf, outStart + _wordsFactory.BytesPerWord);
         }
 
-        private byte[] GetPadding(byte[] inBytes)
+        private byte[] Padding(byte[] inBytes)
         {
             var paddingLength = _wordsFactory.BytesPerBlock - inBytes.Length % _wordsFactory.BytesPerBlock;
 
@@ -134,7 +134,7 @@ namespace PDS3.Commands.RC5
             return padding;
         }
 
-        private byte[] GetRandomBytesForInitVector()
+        private byte[] GetInitializeVector()
         {
             var ivParts = new List<byte[]>();
 
