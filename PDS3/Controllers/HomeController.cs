@@ -54,7 +54,7 @@ namespace PDS3.Controllers
                 RC5 rc5 = new RC5();
 
                 var byteFile = await IOCommand.ReadFile(model.FilePath);
-                var encodedFileContent = rc5.EncipherCBCPAD(byteFile!, hashedKey);
+                var encodedFileContent = rc5.Encrypt(byteFile!, hashedKey);
 
                 await IOCommand.WriteFile(encodedFileContent, model.Password);
 
@@ -85,7 +85,7 @@ namespace PDS3.Controllers
                 RC5 rc5 = new RC5();
 
                 var byteFile = await IOCommand.ReadFile(model.FilePath);
-                var encodedFileContent = rc5.DecipherCBCPAD(byteFile!, hashedKey);
+                var encodedFileContent = rc5.Decrypt(byteFile!, hashedKey);
 
 
                 await IOCommand.WriteFile(encodedFileContent, model.Password, PaddFilename(model.FilePath, "-dec"));

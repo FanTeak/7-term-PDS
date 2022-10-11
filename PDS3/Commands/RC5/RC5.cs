@@ -17,7 +17,7 @@ namespace PDS3.Commands.RC5
             _roundsCount = 16;
         }
 
-        public byte[] EncipherCBCPAD(byte[] input, byte[] key)
+        public byte[] Encrypt(byte[] input, byte[] key)
         {
             var paddedBytes = ConcatArrays(input, GetPadding(input));
             var bytesPerBlock = _wordsFactory.BytesPerBlock;
@@ -47,7 +47,7 @@ namespace PDS3.Commands.RC5
             return encodedFileContent;
         }
 
-        public byte[] DecipherCBCPAD(byte[] input, byte[] key)
+        public byte[] Decrypt(byte[] input, byte[] key)
         {
             var bytesPerBlock = _wordsFactory.BytesPerBlock;
             var s = BuildExpandedKeyTable(key);
