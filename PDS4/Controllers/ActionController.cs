@@ -1,20 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PDS3.Models;
 using System.Diagnostics;
 using System.Text;
 using PDS3.Commands.IOFile;
 using PDS3.Commands.MD5;
 using PDS3.Commands.RC5;
+using PDS3.Models;
 using static PDS3.Commands.RC5.RC5;
+using ErrorViewModel = PDS4.Models.ErrorViewModel;
 
-namespace PDS3.Controllers
+namespace PDS4.Controllers
 {
-    public class HomeController : Controller
+    public class ActionController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<ActionController> _logger;
         private static string FileExtension = "";
 
-        public HomeController(ILogger<HomeController> logger)
+        public ActionController(ILogger<ActionController> logger)
         {
             _logger = logger;
         }
@@ -35,7 +36,7 @@ namespace PDS3.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Encrypt(FunctionModel model)
+        public async Task<IActionResult> EncryptRC5(FunctionModel model)
         {
             try
             {
@@ -48,6 +49,9 @@ namespace PDS3.Controllers
 
                 FileExtension = Path.GetExtension(model.FilePath);
 
+                Stopwatch stopwatch = new Stopwatch();
+                stopwatch.Start();
+
                 var encoded = Encoding.UTF8.GetBytes(model.Password);
                 var hashedKey = MD5.GetMD5HashedKeyForRC5(encoded, KeyLengthInBytesEnum.Bytes_8);
 
@@ -56,9 +60,12 @@ namespace PDS3.Controllers
                 var byteFile = await IOCommand.ReadFile(model.FilePath);
                 var encodedFileContent = rc5.Encrypt(byteFile!, hashedKey);
 
+                stopwatch.Stop();
+                var time = stopwatch.Elapsed;
+
                 await IOCommand.WriteFile(encodedFileContent, model.Password);
 
-                return Ok();
+                return Ok(time);
             }
             catch (Exception e)
             {
@@ -68,7 +75,7 @@ namespace PDS3.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Decrypt(FunctionModel model)
+        public async Task<IActionResult> DecryptRC5(FunctionModel model)
         {
             try
             {
@@ -79,6 +86,9 @@ namespace PDS3.Controllers
                     throw new FileNotFoundException(errorMsg);
                 }
 
+                Stopwatch stopwatch = new Stopwatch();
+                stopwatch.Start();
+
                 var encoded = Encoding.UTF8.GetBytes(model.Password);
                 var hashedKey = MD5.GetMD5HashedKeyForRC5(encoded, KeyLengthInBytesEnum.Bytes_8);
 
@@ -87,10 +97,12 @@ namespace PDS3.Controllers
                 var byteFile = await IOCommand.ReadFile(model.FilePath);
                 var encodedFileContent = rc5.Decrypt(byteFile!, hashedKey);
 
+                stopwatch.Stop();
+                var time = stopwatch.Elapsed;
 
-                await IOCommand.WriteFile(encodedFileContent, model.Password, PaddFilename(model.FilePath, "-dec"));
+                await IOCommand.WriteFile(encodedFileContent, model.FilePath, PaddFilename(model.FilePath, "-dec"));
 
-                return Ok();
+                return Ok(time);
             }
             catch (Exception e)
             {
@@ -116,7 +128,7 @@ namespace PDS3.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
         private static String PaddFilename(string filePath, string padding)

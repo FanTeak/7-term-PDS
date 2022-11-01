@@ -21,17 +21,20 @@
     }
 }
 
-function Encrypt() {
+function EncryptRC5() {
     const password = $('#password1').val();
     const filePath = $('#filePath1').val();
     $.ajax({
         type: 'POST',
-        url: 'Encrypt',
+        url: 'EncryptRC5',
         data: {
             password: password,
             filePath: filePath
         },
         success: function (data) {
+            let elem = $("#time1");
+            $(elem).removeClass("d-none");
+            $(elem).children().text(data);
             alert("Encrypted");
         },
         error: function (data) {
@@ -40,17 +43,20 @@ function Encrypt() {
     });
 }
 
-function Decrypt() {
+function DecryptRC5() {
     const password = $('#password2').val();
     const filePath = $('#filePath2').val();
     $.ajax({
         type: 'POST',
-        url: 'Decrypt',
+        url: 'DecryptRC5',
         data: {
             password: password,
             filePath: filePath
         },
         success: function (data) {
+            let elem = $("#time2");
+            $(elem).removeClass("d-none");
+            $(elem).children().text(data);
             alert("Decrypted");
         },
         error: function (data) {

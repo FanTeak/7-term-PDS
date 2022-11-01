@@ -1,0 +1,141 @@
+﻿@model PDS3.Models.FunctionModel
+@{
+    ViewData["Title"] = "Fourier";
+}
+
+<div>
+    <div class="active-elements">
+        <div class="text-center border-fourier">
+            <b>RC5</b>
+        </div>
+        <div class="border-fourier">
+            <table class="input-table">
+                <tr>
+                    <td>
+                        <label for="password1" class="text-font">Password:</label>
+                    </td>
+                    <td>
+                        <input name="password" type="text" id="password1" value="@Model.Password" class="custom-input">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="filePath1" class="text-font">Path to file:</label>
+                    </td>
+                    <td>
+                        <input name="filePath" type="text" id="filePath1" value="@Model.FilePath" class="custom-input">
+                    </td>
+                </tr>
+            </table>
+            <div class="text-center mt-2">
+                <button type="button" class="sea" style="--content: 'ENCRYPT';" onclick="EncryptRC5()">
+                    <div class="left"></div>
+                    ENCRYPT
+                    <div class="right"></div>
+                </button>
+                <span class="position-absolute mt-2 mx-5 d-none" id="time1">Time:&#xa0;&#xa0;&#xa0;<span></span></span>
+            </div>
+        </div>
+        <div class="border-fourier">
+            <table class="input-table">
+                <tr>
+                    <td>
+                        <label for="password2" class="text-font">Password:</label>
+                    </td>
+                    <td>
+                        <input name="password" type="text" id="password2" value="@Model.Password" class="custom-input">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="filePath2" class="text-font">Path to file:</label>
+                    </td>
+                    <td>
+                        <input name="filePath" type="text" id="filePath2" value="@Model.FilePath" class="custom-input">
+                    </td>
+                </tr>
+            </table>
+            <div class="text-center mt-2">
+                <button type="button" class="sea" style="--content: 'DECRYPT';" onclick="DecryptRC5()">
+                    <div class="left"></div>
+                    DECRYPT
+                    <div class="right"></div>
+                </button>
+                <span class="position-absolute mt-2 mx-5 d-none" id="time2">Time:&#xa0;&#xa0;&#xa0;<span></span></span>
+            </div>
+        </div>
+        <div class="text-font border-fourier text-center">
+            <button type="button" class="cybr-btn mx-2" onclick="OpenFile(false)">
+                FILE
+                <span aria-hidden>_</span>
+                <span aria-hidden class="cybr-btn__glitch">CUM_</span>
+                <span aria-hidden class="cybr-btn__tag">R25</span>
+            </button>
+
+            <button type="button" class="cybr-btn mx-2" onclick="OpenFile(true)">
+                DEC
+                <span aria-hidden>_</span>
+                <span aria-hidden class="cybr-btn__glitch">CUM_</span>
+                <span aria-hidden class="cybr-btn__tag">R25</span>
+            </button>
+        </div>
+        <div class="text-center border-fourier">
+            <b>RSA</b>
+        </div>
+        <div class="border-fourier">
+            <table class="input-table">
+                <tr>
+                    <td>
+                        <label for="filePath3" class="text-font">Path to file:</label>
+                    </td>
+                    <td>
+                        <input name="filePath" type="text" id="filePath3" value="@Model.FilePath" class="custom-input">
+                    </td>
+                </tr>
+            </table>
+            <div class="text-center mt-2">
+                <button type="button" class="sea" style="--content: 'ENCRYPT';" onclick="Encrypt()">
+                    <div class="left"></div>
+                    ENCRYPT
+                    <div class="right"></div>
+                </button>
+                <span class="position-absolute mt-2 mx-5 d-none" id="time3">Time:&#xa0;&#xa0;&#xa0;<span></span></span>
+            </div>
+        </div>
+        <div class="border-fourier">
+            <table class="input-table">
+                <tr>
+                    <td>
+                        <label for="filePath4" class="text-font">Path to file:</label>
+                    </td>
+                    <td>
+                        <input name="filePath" type="text" id="filePath4" value="@Model.FilePath" class="custom-input">
+                    </td>
+                </tr>
+            </table>
+            <div class="text-center mt-2">
+                <button type="button" class="sea" style="--content: 'DECRYPT';" onclick="Decrypt()">
+                    <div class="left"></div>
+                    DECRYPT
+                    <div class="right"></div>
+                </button>
+                <span class="position-absolute mt-2 mx-5 d-none" id="time4">Time:&#xa0;&#xa0;&#xa0;<span></span></span>
+            </div>
+        </div>
+        <div class="text-font border-fourier text-center">
+            <button type="button" class="cybr-btn mx-2" onclick="OpenFile(false)">
+                FILE
+                <span aria-hidden>_</span>
+                <span aria-hidden class="cybr-btn__glitch">CUM_</span>
+                <span aria-hidden class="cybr-btn__tag">R25</span>
+            </button>
+
+            <button type="button" class="cybr-btn mx-2" onclick="OpenFile(true)">
+                DEC
+                <span aria-hidden>_</span>
+                <span aria-hidden class="cybr-btn__glitch">CUM_</span>
+                <span aria-hidden class="cybr-btn__tag">R25</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -7,10 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Update="Views\Home\Index.cshtml">
+    <Content Update="Views\Action\Index.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Commands\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PDS3\PDS3.csproj" />
   </ItemGroup>
 
 </Project>
