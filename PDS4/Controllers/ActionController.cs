@@ -13,11 +13,17 @@ namespace PDS4.Controllers
     public class ActionController : Controller
     {
         private readonly ILogger<ActionController> _logger;
+        private static System.Security.Cryptography.RSACryptoServiceProvider _rsa = new();
+        
         private static string FileExtension = "";
+
+        private const int EncipherBlockSizeRSA = 64;
+        private const int DecipherBlockSizeRSA = 128;
 
         public ActionController(ILogger<ActionController> logger)
         {
             _logger = logger;
+            IOCommand.FilePath = "C:\\Users\\dutch\\source\\repos\\7term\\PDS\\PDS4\\";
         }
 
         public IActionResult Index()
@@ -30,9 +36,9 @@ namespace PDS4.Controllers
             return View();
         }
 
-        public IActionResult Action(FunctionModel model)
+        public IActionResult Action()
         {
-            return View(new FunctionModel());
+            return View(new FunctionModel("Qwerty123", "C:\\Users\\dutch\\source\\repos\\7term\\PDS\\PDS4\\test.txt"));
         }
 
         [HttpPost]
@@ -49,15 +55,16 @@ namespace PDS4.Controllers
 
                 FileExtension = Path.GetExtension(model.FilePath);
 
+                RC5 rc5 = new RC5();
+
+                var byteFile = await IOCommand.ReadFile(model.FilePath);
+
                 Stopwatch stopwatch = new Stopwatch();
                 stopwatch.Start();
 
                 var encoded = Encoding.UTF8.GetBytes(model.Password);
                 var hashedKey = MD5.GetMD5HashedKeyForRC5(encoded, KeyLengthInBytesEnum.Bytes_8);
 
-                RC5 rc5 = new RC5();
-
-                var byteFile = await IOCommand.ReadFile(model.FilePath);
                 var encodedFileContent = rc5.Encrypt(byteFile!, hashedKey);
 
                 stopwatch.Stop();
@@ -86,21 +93,124 @@ namespace PDS4.Controllers
                     throw new FileNotFoundException(errorMsg);
                 }
 
+                RC5 rc5 = new RC5();
+
+                var byteFile = await IOCommand.ReadFile(model.FilePath);
+
                 Stopwatch stopwatch = new Stopwatch();
                 stopwatch.Start();
 
                 var encoded = Encoding.UTF8.GetBytes(model.Password);
                 var hashedKey = MD5.GetMD5HashedKeyForRC5(encoded, KeyLengthInBytesEnum.Bytes_8);
 
-                RC5 rc5 = new RC5();
-
-                var byteFile = await IOCommand.ReadFile(model.FilePath);
                 var encodedFileContent = rc5.Decrypt(byteFile!, hashedKey);
 
                 stopwatch.Stop();
                 var time = stopwatch.Elapsed;
 
-                await IOCommand.WriteFile(encodedFileContent, model.FilePath, PaddFilename(model.FilePath, "-dec"));
+                await IOCommand.WriteFile(encodedFileContent, model.FilePath, PadFileName(model.FilePath, "-dec"));
+
+                return Ok(time);
+            }
+            catch (Exception e)
+            {
+                _logger.Log(LogLevel.Error, e.Message);
+                throw new Exception(e.Message);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EncryptRSA(FunctionModel model)
+        {
+            try
+            {
+                if (!System.IO.File.Exists(model.FilePath))
+                {
+                    const string errorMsg = "File not found";
+                    _logger.Log(LogLevel.Error, errorMsg);
+                    throw new FileNotFoundException(errorMsg);
+                }
+
+                FileExtension = Path.GetExtension(model.FilePath);
+
+                var byteFile = await IOCommand.ReadFile(model.FilePath);
+                var encipheredBytes = new List<byte>
+                {
+                    Capacity = byteFile!.Length * 2
+                };
+
+                Stopwatch stopwatch = new Stopwatch();
+                stopwatch.Start();
+
+                await Task.Run(() =>
+                {
+                    for (int i = 0; i < byteFile.Length; i += EncipherBlockSizeRSA)
+                    {
+                        var inputBlock = byteFile
+                            .Skip(i)
+                            .Take(EncipherBlockSizeRSA)
+                            .ToArray();
+
+                        encipheredBytes.AddRange(_rsa.Encrypt(
+                            inputBlock,
+                            fOAEP: false));
+                    }
+                });
+
+                stopwatch.Stop();
+                var time = stopwatch.Elapsed;
+
+                await IOCommand.WriteFile(encipheredBytes!.ToArray(), model.Password);
+
+                return Ok(time);
+            }
+            catch (Exception e)
+            {
+                _logger.Log(LogLevel.Error, e.Message);
+                throw new Exception(e.Message);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DecryptRSA(FunctionModel model)
+        {
+            try
+            {
+                if (!System.IO.File.Exists(model.FilePath))
+                {
+                    const string errorMsg = "File not found";
+                    _logger.Log(LogLevel.Error, errorMsg);
+                    throw new FileNotFoundException(errorMsg);
+                }
+
+                var byteFile = await IOCommand.ReadFile(model.FilePath);
+                var decipheredBytes = new List<byte>
+                {
+                    Capacity = byteFile!.Length / 2
+                };
+
+                Stopwatch stopwatch = new Stopwatch();
+                stopwatch.Start();
+
+                await Task.Run(() =>
+                {
+                    for (int i = 0; i < byteFile.Length; i += DecipherBlockSizeRSA)
+                    {
+                        var inputBlock = byteFile
+                            .Skip(i)
+                            .Take(DecipherBlockSizeRSA)
+                            .ToArray();
+
+                        decipheredBytes.AddRange(_rsa.Decrypt(
+                            inputBlock,
+                            fOAEP: false));
+                    }
+                });
+
+                stopwatch.Stop();
+                var time = stopwatch.Elapsed;
+
+                await IOCommand.WriteFile(decipheredBytes.ToArray(), model.FilePath, PadFileName(model.FilePath, "-dec"));
 
                 return Ok(time);
             }
@@ -114,7 +224,7 @@ namespace PDS4.Controllers
         [HttpPost]
         public IActionResult OpenFile(string filePath, bool dec = false)
         {
-            filePath = dec ? PaddFilename(filePath, "-dec") : filePath;
+            filePath = dec ? PadFileName(filePath, "-dec") : filePath;
             if (IOCommand.OpenFile(filePath))
             {
                 return Ok();
@@ -131,7 +241,7 @@ namespace PDS4.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        private static String PaddFilename(string filePath, string padding)
+        private static String PadFileName(string filePath, string padding)
         {
             var fi = new FileInfo(filePath);
             var fn = Path.GetFileNameWithoutExtension(filePath);

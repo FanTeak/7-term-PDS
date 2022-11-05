@@ -4,7 +4,8 @@
 
     public static class IOCommand
     {
-        private const string FilePath = "C:\\Users\\dutch\\source\\repos\\7term\\PDS\\PDS3\\";
+        public static string FilePath;
+
         public static async Task WriteFile(byte[] data, string password, string? filePath = null)
         {
             try

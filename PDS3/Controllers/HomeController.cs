@@ -17,6 +17,7 @@ namespace PDS3.Controllers
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
+            IOCommand.FilePath = "C:\\Users\\dutch\\source\\repos\\7term\\PDS\\PDS3\\";
         }
 
         public IActionResult Index()
@@ -29,9 +30,9 @@ namespace PDS3.Controllers
             return View();
         }
 
-        public IActionResult Action(FunctionModel model)
+        public IActionResult Action()
         {
-            return View(new FunctionModel());
+            return View(new FunctionModel("Qwerty123", "C:\\Users\\dutch\\source\\repos\\7term\\PDS\\PDS3\\test.txt"));
         }
 
         [HttpPost]
@@ -88,7 +89,7 @@ namespace PDS3.Controllers
                 var encodedFileContent = rc5.Decrypt(byteFile!, hashedKey);
 
 
-                await IOCommand.WriteFile(encodedFileContent, model.Password, PaddFilename(model.FilePath, "-dec"));
+                await IOCommand.WriteFile(encodedFileContent, model.Password, PadFileName(model.FilePath, "-dec"));
 
                 return Ok();
             }
@@ -102,7 +103,7 @@ namespace PDS3.Controllers
         [HttpPost]
         public IActionResult OpenFile(string filePath, bool dec = false)
         {
-            filePath = dec ? PaddFilename(filePath, "-dec") : filePath;
+            filePath = dec ? PadFileName(filePath, "-dec") : filePath;
             if (IOCommand.OpenFile(filePath))
             {
                 return Ok();
@@ -119,7 +120,7 @@ namespace PDS3.Controllers
             return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
         }
 
-        private static String PaddFilename(string filePath, string padding)
+        private static String PadFileName(string filePath, string padding)
         {
             var fi = new FileInfo(filePath);
             var fn = Path.GetFileNameWithoutExtension(filePath);
