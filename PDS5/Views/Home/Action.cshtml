@@ -1,0 +1,45 @@
+﻿@model PDS5.Models.FunctionModel
+@{
+    ViewData["Title"] = "Fourier";
+}
+
+<div>
+    <div class="active-elements">
+        <div class="border-fourier">
+            <div class="text-center mt-2">
+                <button type="button" class="sea" style="--content: 'ENCRYPT';" onclick="EncryptRC5()">
+                    <div class="left"></div>
+                    ENCRYPT
+                    <div class="right"></div>
+                </button>
+                <span class="position-absolute mt-2 mx-5 d-none" id="time1">Time:&#xa0;&#xa0;&#xa0;<span></span></span>
+            </div>
+        </div>
+        <div class="border-fourier">
+            
+            <div class="text-center mt-2">
+                <button type="button" class="sea" style="--content: 'DECRYPT';" onclick="DecryptRC5()">
+                    <div class="left"></div>
+                    DECRYPT
+                    <div class="right"></div>
+                </button>
+                <span class="position-absolute mt-2 mx-5 d-none" id="time2">Time:&#xa0;&#xa0;&#xa0;<span></span></span>
+            </div>
+        </div>
+        <div class="text-font border-fourier text-center">
+            <button type="button" class="cybr-btn mx-2" onclick="OpenFile(false, true)">
+                FILE
+                <span aria-hidden>_</span>
+                <span aria-hidden class="cybr-btn__glitch">CUM_</span>
+                <span aria-hidden class="cybr-btn__tag">R25</span>
+            </button>
+
+            <button type="button" class="cybr-btn mx-2" onclick="OpenFile(true, true)">
+                DEC
+                <span aria-hidden>_</span>
+                <span aria-hidden class="cybr-btn__glitch">CUM_</span>
+                <span aria-hidden class="cybr-btn__tag">R25</span>
+            </button>
+        </div>
+    </div>
+</div>
