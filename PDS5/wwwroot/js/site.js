@@ -1,110 +1,63 @@
-﻿function OpenFile(dec, rc5) {
-    let password1;
-    let password2;
-    if (rc5) {
-        password1 = $('#password1').val();
-        password2 = $('#password2').val();
-    }
-    const filePath = $(`#filePath${rc5 ? '2' : '4'}`).val();
+﻿function GenerateSignature(isFromFile)
+{
+    const value = $(isFromFile ? '#filePath' : '#inputValue').val();
 
-    if (!rc5 || password1 === password2) {
-        $.ajax({
-            type: 'POST',
-            url: 'OpenFile',
-            data: {
-                filepath: filePath,
-                dec: dec
-            },
-            success: function (data) {
-                console.log(data);
-            },
-            error: function (data) {
-                alert("Cannot open file");
-            }
-        });
-    }
-}
-
-function EncryptRC5() {
-    const password = $('#password1').val();
-    const filePath = $('#filePath1').val();
     $.ajax({
         type: 'POST',
-        url: 'EncryptRC5',
+        url: 'GenerateSignature',
         data: {
-            password: password,
-            filePath: filePath
+            value: value,
+            isFromFile: isFromFile
         },
         success: function (data) {
-            let elem = $("#time1");
-            $(elem).removeClass("d-none");
-            $(elem).children().text(data);
-            alert("Encrypted");
+            $('#signature').val(data);
         },
         error: function (data) {
-            alert(data);
+            alert(JSON.stringify(data));
         }
     });
 }
 
-function DecryptRC5() {
-    const password = $('#password2').val();
-    const filePath = $('#filePath2').val();
+function SaveSignature()
+{
+    const filePath = $('#signaturePath').val();
+    const value = $('#signature').val();
+
     $.ajax({
         type: 'POST',
-        url: 'DecryptRC5',
+        url: 'SaveSignature',
         data: {
-            password: password,
-            filePath: filePath
+            filePath: filePath,
+            value: value
         },
         success: function (data) {
-            let elem = $("#time2");
-            $(elem).removeClass("d-none");
-            $(elem).children().text(data);
-            alert("Decrypted");
+            alert("Signature has been saved");
         },
         error: function (data) {
-            alert(data);
+            alert(JSON.stringify(data));
         }
     });
 }
 
-function EncryptRSA() {
-    const filePath = $('#filePath3').val();
-    $.ajax({
-        type: 'POST',
-        url: 'EncryptRSA',
-        data: {
-            filePath: filePath
-        },
-        success: function (data) {
-            let elem = $("#time3");
-            $(elem).removeClass("d-none");
-            $(elem).children().text(data);
-            alert("Encrypted");
-        },
-        error: function (data) {
-            alert(data);
-        }
-    });
-}
+function Check(isFromFile)
+{
+    const signatureValue = $(isFromFile ? '#signaturePath' : '#signature').val();
+    const checkValue = $(isFromFile ? '#fileCheck' : '#inputCheck').val();
 
-function DecryptRSA() {
-    const filePath = $('#filePath4').val();
     $.ajax({
         type: 'POST',
-        url: 'DecryptRSA',
+        url: 'Check',
         data: {
-            filePath: filePath
+            signatureValue: signatureValue,
+            isFromFile: isFromFile,
+            checkValue: checkValue
         },
         success: function (data) {
-            let elem = $("#time4");
-            $(elem).removeClass("d-none");
-            $(elem).children().text(data);
-            alert("Decrypted");
+            const msg = data ? "Verified" : "Not Verified";
+            alert(msg);
         },
         error: function (data) {
-            alert(data);
+            alert(JSON.stringify(data));
         }
     });
 }

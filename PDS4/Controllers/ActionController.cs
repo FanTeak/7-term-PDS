@@ -77,7 +77,7 @@ namespace PDS4.Controllers
             catch (Exception e)
             {
                 _logger.Log(LogLevel.Error, e.Message);
-                throw new Exception(e.Message);
+                return Problem(e.Message);
             }
         }
 
@@ -115,7 +115,7 @@ namespace PDS4.Controllers
             catch (Exception e)
             {
                 _logger.Log(LogLevel.Error, e.Message);
-                throw new Exception(e.Message);
+                return Problem(e.Message);
             }
         }
 
@@ -167,7 +167,7 @@ namespace PDS4.Controllers
             catch (Exception e)
             {
                 _logger.Log(LogLevel.Error, e.Message);
-                throw new Exception(e.Message);
+                return Problem(e.Message);
             }
         }
 
@@ -217,7 +217,7 @@ namespace PDS4.Controllers
             catch (Exception e)
             {
                 _logger.Log(LogLevel.Error, e.Message);
-                throw new Exception(e.Message);
+                return Problem(e.Message);
             }
         }
 

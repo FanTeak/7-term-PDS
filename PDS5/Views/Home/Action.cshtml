@@ -5,41 +5,111 @@
 
 <div>
     <div class="active-elements">
-        <div class="border-fourier">
-            <div class="text-center mt-2">
-                <button type="button" class="sea" style="--content: 'ENCRYPT';" onclick="EncryptRC5()">
-                    <div class="left"></div>
-                    ENCRYPT
-                    <div class="right"></div>
-                </button>
-                <span class="position-absolute mt-2 mx-5 d-none" id="time1">Time:&#xa0;&#xa0;&#xa0;<span></span></span>
-            </div>
+        <div class="text-center border-fourier">
+            <b>Input</b>
         </div>
         <div class="border-fourier">
-            
+            <table class="input-table">
+                <tr>
+                    <td>
+                        <label for="inputValue" class="text-font">Text field:</label>
+                    </td>
+                    <td>
+                        <input name="inputValue" type="text" id="inputValue" value="@Model.InputValue" class="custom-input">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="filePath" class="text-font">Path to file:</label>
+                    </td>
+                    <td>
+                        <input name="checkValue" type="text" id="filePath" value="@Model.FilePath" class="custom-input">
+                    </td>
+                </tr>
+            </table>
             <div class="text-center mt-2">
-                <button type="button" class="sea" style="--content: 'DECRYPT';" onclick="DecryptRC5()">
-                    <div class="left"></div>
-                    DECRYPT
-                    <div class="right"></div>
+                <button type="button" class="cybr-btn mx-2" onclick="GenerateSignature(false)">
+                    INPUT
+                    <span aria-hidden>_</span>
+                    <span aria-hidden class="cybr-btn__glitch">CUM_</span>
+                    <span aria-hidden class="cybr-btn__tag">R25</span>
                 </button>
-                <span class="position-absolute mt-2 mx-5 d-none" id="time2">Time:&#xa0;&#xa0;&#xa0;<span></span></span>
+                <button type="button" class="cybr-btn mx-2" onclick="GenerateSignature(true)">
+                    FILE
+                    <span aria-hidden>_</span>
+                    <span aria-hidden class="cybr-btn__glitch">CUM_</span>
+                    <span aria-hidden class="cybr-btn__tag">R25</span>
+                </button>
             </div>
         </div>
-        <div class="text-font border-fourier text-center">
-            <button type="button" class="cybr-btn mx-2" onclick="OpenFile(false, true)">
-                FILE
-                <span aria-hidden>_</span>
-                <span aria-hidden class="cybr-btn__glitch">CUM_</span>
-                <span aria-hidden class="cybr-btn__tag">R25</span>
-            </button>
-
-            <button type="button" class="cybr-btn mx-2" onclick="OpenFile(true, true)">
-                DEC
-                <span aria-hidden>_</span>
-                <span aria-hidden class="cybr-btn__glitch">CUM_</span>
-                <span aria-hidden class="cybr-btn__tag">R25</span>
-            </button>
+        <div class="text-center border-fourier">
+            <b>Signature</b>
+        </div>
+        <div class="border-fourier">
+            <table class="input-table">
+                <tr>
+                    <td>
+                        <label for="signature" class="text-font">Signature:</label>
+                    </td>
+                    <td>
+                        <input name="signature" type="text" id="signature" class="custom-input">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="signaturePath" class="text-font">Path to file:</label>
+                    </td>
+                    <td>
+                        <input name="signaturePath" type="text" id="signaturePath" value="@Model.SignaturePath" class="custom-input">
+                    </td>
+                </tr>
+            </table>
+            <div class="text-center mt-2">
+                <button type="button" class="sea" style="--content: 'SAVE';" onclick="SaveSignature()">
+                    <div class="left"></div>
+                    SAVE
+                    <div class="right"></div>
+                </button>
+            </div>
+        </div>
+        <div class="text-center border-fourier">
+            <b>Check</b>
+        </div>
+        <div class="border-fourier">
+            <table class="input-table">
+                <tr>
+                    <td>
+                        <label for="inputCheck" class="text-font">Text field:</label>
+                    </td>
+                    <td>
+                        <input name="inputCheck" type="text" id="inputCheck" value="@Model.InputValue" class="custom-input">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="fileCheck" class="text-font">Path to file:</label>
+                    </td>
+                    <td>
+                        <input name="fileCheck" type="text" id="fileCheck" value="@Model.FilePath" class="custom-input">
+                    </td>
+                </tr>
+            </table>
+            <div class="text-center mt-2">
+                <div class="text-center mt-2">
+                    <button type="button" class="cybr-btn mx-2" onclick="Check(false)">
+                        INPUT
+                        <span aria-hidden>_</span>
+                        <span aria-hidden class="cybr-btn__glitch">CUM_</span>
+                        <span aria-hidden class="cybr-btn__tag">R25</span>
+                    </button>
+                    <button type="button" class="cybr-btn mx-2" onclick="Check(true)">
+                        FILE
+                        <span aria-hidden>_</span>
+                        <span aria-hidden class="cybr-btn__glitch">CUM_</span>
+                        <span aria-hidden class="cybr-btn__tag">R25</span>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
